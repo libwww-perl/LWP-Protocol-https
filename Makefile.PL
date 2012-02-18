@@ -1,6 +1,6 @@
 #!perl -w
 
-require 5.008008;
+require 5.008001;
 use strict;
 use ExtUtils::MakeMaker;
 use Getopt::Long qw(GetOptions);
@@ -11,7 +11,7 @@ WriteMakefile(
     ABSTRACT_FROM => 'lib/LWP/Protocol/https.pm',
     AUTHOR => 'Gisle Aas <gisle@activestate.com>',
     LICENSE => "perl",
-    MIN_PERL_VERSION => 5.008008,
+    MIN_PERL_VERSION => 5.008001,
     PREREQ_PM => {
 	'LWP::UserAgent' => '6.02',
 	'Net::HTTPS' => 6,
