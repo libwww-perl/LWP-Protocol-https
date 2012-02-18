@@ -1,4 +1,15 @@
 _______________________________________________________________________________
+2012-02-18 LWP-Protocol-https 6.03
+
+Skip test if offline [RT#74163]
+
+Typo fixes
+
+Restore perl-5.8.1 compatibility.
+
+
+
+_______________________________________________________________________________
 2011-03-27 LWP-Protocol-https 6.02
 
 Initial release of LWP-Protocol-https as a separate distribution. There are no code

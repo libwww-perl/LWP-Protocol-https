@@ -1,7 +1,7 @@
 package LWP::Protocol::https;
 
 use strict;
-our $VERSION = "6.02";
+our $VERSION = "6.03";
 
 require LWP::Protocol::http;
 our @ISA = qw(LWP::Protocol::http);
