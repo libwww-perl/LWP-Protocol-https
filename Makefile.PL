@@ -20,7 +20,7 @@ WriteMakefile(
     },
     META_MERGE => {
 	resources => {
-            repository => 'http://github.com/gisle/lwp-protocol-https',
+            repository => 'http://github.com/libwww-perl/lwp-protocol-https',
 	    MailingList => 'mailto:libwww@perl.org',
         }
     },
