@@ -3,7 +3,6 @@
 require 5.008001;
 use strict;
 use ExtUtils::MakeMaker;
-use Getopt::Long qw(GetOptions);
 
 WriteMakefile(
     NAME => 'LWP::Protocol::https',
