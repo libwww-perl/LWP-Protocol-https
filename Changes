@@ -1,4 +1,13 @@
 _______________________________________________________________________________
+2013-04-29 LWP-Protocol-https 6.04
+
+Fix IO::Socket::SSL warnings when not verifying hostname.
+
+Doc spelling fix.
+
+
+
+_______________________________________________________________________________
 2012-02-18 LWP-Protocol-https 6.03
 
 Skip test if offline [RT#74163]
