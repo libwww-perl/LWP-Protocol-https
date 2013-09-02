@@ -14,6 +14,7 @@ WriteMakefile(
     PREREQ_PM => {
 	'LWP::UserAgent' => '6.04',
 	'Net::HTTPS' => 6,
+        'Net::SSLeay' => "1.33",
 	'IO::Socket::SSL' => "1.54",
 	'Mozilla::CA' => "20110101",
     },
