@@ -5,6 +5,7 @@ our $VERSION = "6.04";
 
 require LWP::Protocol::http;
 our @ISA = qw(LWP::Protocol::http);
+require Net::HTTPS;
 
 sub socket_type
 {
@@ -83,10 +84,24 @@ sub _get_sock_info
     $res->header("Client-SSL-Socket-Class" => $Net::HTTPS::SSL_SOCKET_CLASS);
 }
 
+# upgrade plain socket to SSL, used for CONNECT tunnel when proxying https
+# will only work if the underlying socket class of Net::HTTPS is
+# IO::Socket::SSL, but code will only be called in this case
+if ( $Net::HTTPS::SSL_SOCKET_CLASS->can('start_SSL')) {
+    *_upgrade_sock = sub {
+	my ($self,$sock,$url) = @_;
+	$sock = LWP::Protocol::https::Socket->start_SSL( $sock,
+	    SSL_verifycn_name => $url->host,
+	    $self->_extra_sock_opts,
+	);
+	$@ = LWP::Protocol::https::Socket->errstr if ! $sock;
+	return $sock;
+    }
+}
+
 #-----------------------------------------------------------
 package LWP::Protocol::https::Socket;
 
-require Net::HTTPS;
 our @ISA = qw(Net::HTTPS LWP::Protocol::http::SocketMethods);
 
 1;
