@@ -4,3 +4,4 @@ Makefile.PL			Makefile generator
 README
 lib/LWP/Protocol/https.pm	Access with HTTP/1.1 protocol over SSL
 t/apache.t
+t/https_proxy.t
