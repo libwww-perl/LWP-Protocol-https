@@ -6,6 +6,7 @@ our $VERSION = "6.04";
 require LWP::Protocol::http;
 our @ISA = qw(LWP::Protocol::http);
 require Net::HTTPS;
+require List::MoreUtils; # for the qw{natatime};
 
 sub socket_type
 {
@@ -50,17 +51,62 @@ EOT
     return (%ssl_opts, $self->SUPER::_extra_sock_opts);
 }
 
+
+# this will provide a fix to the basic problem
+# we simply ask if there is a subjectAltName,
+# and walked through them, dropping the type
+# to see if the name is verifiable. 
+# hack by drieux@wetware.com 
+sub _in_san
+{
+    my($me, $check, $cert) = @_;
+	
+	# we can return early if there are no SAN options.
+	my @sans = $cert->peer_certificate('subjectAltNames');
+	return unless scalar @sans; 
+	
+	# this is about denuding the the '/CN=' prefix
+	# so that we have less problems with the comparison
+    my $de_cn = $check;
+	$de_cn =~ s/.*=//;
+	
+    my $it = List::MoreUtils::natatime(2,@sans);
+    # http://tools.ietf.org/html/rfc5280#section-4.2.1.6
+    # provides the defition of ( type-id, value ) pairing
+    # hence why we drop the typ
+    while( my ( $type_id, $value ) = $it->() ) {
+		my $re ;
+		# if it started with a '*' we have to convert
+		# that into a perlre
+		if ($value =~ /^\*/) {
+		  $value =~ s/^\*//;
+		  # the regex rules out finding foo.*.bar.baz
+		  # given the dNSName of *.bar.baz
+		  $re = qr/^[^.]+$value/
+		} else {
+		   $re = qr/$value/;
+		}
+		if( $de_cn =~ $re ) {
+		   return 'ok';
+		}
+	}
+    return;
+}
+
 sub _check_sock
 {
     my($self, $req, $sock) = @_;
     my $check = $req->header("If-SSL-Cert-Subject");
     if (defined $check) {
-	my $cert = $sock->get_peer_certificate ||
-	    die "Missing SSL certificate";
-	my $subject = $cert->subject_name;
-	die "Bad SSL certificate subject: '$subject' !~ /$check/"
-	    unless $subject =~ /$check/;
-	$req->remove_header("If-SSL-Cert-Subject");  # don't pass it on
+        my $cert = $sock->get_peer_certificate ||
+        die "Missing SSL certificate";
+        my $subject = $cert->subject_name;
+		unless ( $subject =~ /$check/ ) {
+            my $ok = $self->_in_san( $check, $cert);
+            die "Bad SSL certificate subject: '$subject' !~ /$check/"
+                unless $ok;
+        }
+	    $req->remove_header("If-SSL-Cert-Subject");  # don't pass it on
     }
 }
 
