@@ -6,7 +6,6 @@ our $VERSION = "6.04";
 require LWP::Protocol::http;
 our @ISA = qw(LWP::Protocol::http);
 require Net::HTTPS;
-require List::MoreUtils; # for the qw{natatime};
 
 sub socket_type
 {
@@ -52,6 +51,14 @@ EOT
 }
 
 
+# I pinched this from List::MoreUtils
+# so as not to impose requirements onto downstream sources.
+sub natatime ($@) {
+    my ($n, @list) =  @_;
+    return sub {
+        return splice @list, 0, $n;
+    }
+}
 # this will provide a fix to the basic problem
 # we simply ask if there is a subjectAltName,
 # and walked through them, dropping the type
@@ -70,7 +77,7 @@ sub _in_san
     my $de_cn = $check;
 	$de_cn =~ s/.*=//;
 	
-    my $it = List::MoreUtils::natatime(2,@sans);
+    my $it = natatime(2,@sans);
     # http://tools.ietf.org/html/rfc5280#section-4.2.1.6
     # provides the defition of ( type-id, value ) pairing
     # hence why we drop the typ
