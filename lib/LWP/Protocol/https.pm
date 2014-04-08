@@ -51,19 +51,10 @@ EOT
 }
 
 
-# I pinched this from List::MoreUtils
-# so as not to impose requirements onto downstream sources.
-sub natatime ($@) {
-    my ($n, @list) =  @_;
-    return sub {
-        return splice @list, 0, $n;
-    }
-}
 # this will provide a fix to the basic problem
 # we simply ask if there is a subjectAltName,
 # and walked through them, dropping the type
 # to see if the name is verifiable. 
-# hack by drieux@wetware.com 
 sub _in_san
 {
     my($me, $check, $cert) = @_;
@@ -77,11 +68,10 @@ sub _in_san
     my $de_cn = $check;
 	$de_cn =~ s/.*=//;
 	
-    my $it = natatime(2,@sans);
     # http://tools.ietf.org/html/rfc5280#section-4.2.1.6
     # provides the defition of ( type-id, value ) pairing
-    # hence why we drop the typ
-    while( my ( $type_id, $value ) = $it->() ) {
+    # hence we need to splice them out two by two.
+    while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {
 		my $re ;
 		# if it started with a '*' we have to convert
 		# that into a perlre
