@@ -68,25 +68,32 @@ sub _in_san
     my $de_cn = $check;
 	$de_cn =~ s/.*=//;
 	
+	# we will store the regex we compare the de_cn value
+	# and if we have a match we will return early.
+    my $re ;
+	
     # http://tools.ietf.org/html/rfc5280#section-4.2.1.6
     # provides the defition of ( type-id, value ) pairing
     # hence we need to splice them out two by two.
     while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {
-		my $re ;
-		# if it started with a '*' we have to convert
-		# that into a perlre
-		if ($value =~ /^\*/) {
-		  $value =~ s/^\*//;
-		  # the regex rules out finding foo.*.bar.baz
-		  # given the dNSName of *.bar.baz
-		  $re = qr/^[^.]+$value/
-		} else {
-		   $re = qr/$value/;
-		}
-		if( $de_cn =~ $re ) {
-		   return 'ok';
-		}
-	}
+        # guard the '.' in the dNSName
+        $value = quotemeta($value);
+        
+        # if it started with a '*' we have to convert
+        # that into a perlre
+        if ($value =~ /^\\\*/) {
+            $value =~ s/^\\\*//;
+            # the regex rules out finding foo.*.bar.baz
+            # given the dNSName of *.bar.baz
+            $re = qr/^[^.]+$value$/
+        } else {
+            $re = qr/^$value$/;
+        }
+        # and now compare the de_cn to our regex
+        if( $de_cn =~ $re ) {
+            return 'ok';
+        }
+    }
     return;
 }
 
@@ -96,14 +103,14 @@ sub _check_sock
     my $check = $req->header("If-SSL-Cert-Subject");
     if (defined $check) {
         my $cert = $sock->get_peer_certificate ||
-        die "Missing SSL certificate";
+            die "Missing SSL certificate";
         my $subject = $cert->subject_name;
-		unless ( $subject =~ /$check/ ) {
+        unless ( $subject =~ /$check/ ) {
             my $ok = $self->_in_san( $check, $cert);
             die "Bad SSL certificate subject: '$subject' !~ /$check/"
                 unless $ok;
         }
-	    $req->remove_header("If-SSL-Cert-Subject");  # don't pass it on
+        $req->remove_header("If-SSL-Cert-Subject");  # don't pass it on
     }
 }
 

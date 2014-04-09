@@ -1,6 +1,6 @@
 use warnings;
 use strict;
-use Test::More tests => 6;
+use Test::More tests => 7;
 #--------------------------------------------------------------
 # this is just for testing the '_in_san()' method
 #--------------------------------------------------------------
@@ -47,7 +47,8 @@ sub test_run {
         $check = '/CN=cat.hat.rat.bat';
         $have = $class->_in_san($check, $p_cert);
         ok( $have, 'ok for cat.hat.rat.bat');
-        # and the not case of below the dot
+        # and the not case of below the dot,
+        # the rule is that a dot stops a '*'
         $check = '/CN=cat.black.blue.funspace.notTLD';
         $have = $class->_in_san($check, $p_cert);
         ok( !$have, 'not ok -- cat.black.blue.funspace.notTL');
@@ -59,6 +60,14 @@ sub test_run {
             2, '*.red.funspace.notTLD.'
         );
         $check = '/CN=krypton-oozie.red.funspace.notTLD';
+        $have = $class->_in_san($check, $p_cert);
+        ok( !$have, 'not ok -- malformed SAN name');
+        #-----------------------------------------------
+        # need to guard the '.' in any of the sans as reges
+         @san_list =( 
+            2, '*.red.funspace.notTLD'
+        );
+        $check = '/CN=krypton-oozieDred.funspace.notTLD';
         $have = $class->_in_san($check, $p_cert);
         ok( !$have, 'not ok -- malformed SAN name');
         
