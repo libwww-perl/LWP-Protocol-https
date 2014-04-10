@@ -75,22 +75,15 @@ sub _in_san
     # http://tools.ietf.org/html/rfc5280#section-4.2.1.6
     # provides the defition of ( type-id, value ) pairing
     # hence we need to splice them out two by two.
-    while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {
-        # guard the '.' in the dNSName
-        $value = quotemeta($value);
-        
-        # if it started with a '*' we have to convert
-        # that into a perlre
-        if ($value =~ /^\\\*/) {
-            $value =~ s/^\\\*//;
-            # the regex rules out finding foo.*.bar.baz
-            # given the dNSName of *.bar.baz
-            $re = qr/^[^.]+$value$/
-        } else {
-            $re = qr/^$value$/;
+    while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {  
+        # quotemeta() beforehand, and then change the wildcard
+        # to a perlre if we start the string with w '*' 
+        my $re = quotemeta($value);
+        if ($re =~ /^\\\*/) {
+            $re =~ s/^\\\*/[^.]+/;
         }
-        # and now compare the de_cn to our regex
-        if( $de_cn =~ $re ) {
+        # compare the de_cn with our 
+        if( $de_cn =~ /^$re$/ ) {
             return 'ok';
         }
     }
