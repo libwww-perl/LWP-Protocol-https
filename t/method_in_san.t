@@ -1,18 +1,17 @@
 use warnings;
 use strict;
-use Test::More tests => 7;
+use Test::More tests => 17;
 #--------------------------------------------------------------
 # this is just for testing the '_in_san()' method
 #--------------------------------------------------------------
-
-# This is our class_under_test
 use LWP::Protocol::https;
 sub class_under_test { return 'LWP::Protocol::https'; }
 #-----------------------------
-test_run();
+test__in_san();
+test__cn_match();
 
 #-----------------
-sub test_run {
+sub test__in_san {
     my $class = class_under_test();
     can_ok( $class, '_in_san' );
     {
@@ -30,49 +29,81 @@ sub test_run {
         };
         
         #-----------------------------------
-        # the first case we have nothing in the peer_certificate()
-        my $check = '/CN=krypton-oozie.red.funspace.notTLD';
-        my $have = $class->_in_san($check, $p_cert);
-        ok( !$have, 'not ok -- no san_list');
-        @san_list =( 
-            2, 'cat.hat.rat.bat', 
-            2, '*.funspace.notTLD',
-            2, '*.blue.funspace.notTLD',
-            2, '*.red.funspace.notTLD'
+        # We need three simple cases, one without SAN
+        # one with a pass, one with a fail connection.
+        # until we need to deal with more than just the simple dns_match
+        # futureNote: what if we use the 'type_id' -- and need to dispatch
+        # to other than the '_cn_match()' method -- we may want to extend this 
+        # basic list of tests.
+        my @tests = (
+            {
+                'san'   => [],
+                'cn'    => '/CN=foo.bar.baz',
+                'want'  => undef,
+                'label' => 'empty SAN',
+            },
+            {
+                'san'   => [2, '*.bar.baz'],
+                'cn'    => '/CN=foo.bar.baz',
+                'want'  => 'ok',
+                'label' => 'CN matched by wild card SAN',
+            },
+            {
+                'san'   => [2, '*.bar.baz',],
+                'cn'    => '/CN=cat.rat.bat',
+                'want'  => undef,
+                'label' => 'CN not in SAN',
+            }
         );
-        # and now we get it as a part of the last on the list
-        $have = $class->_in_san($check, $p_cert);
-        ok( $have, 'ok for krypton-oozie.red.funspace.notTLD');
-        # now the just name
-        $check = '/CN=cat.hat.rat.bat';
-        $have = $class->_in_san($check, $p_cert);
-        ok( $have, 'ok for cat.hat.rat.bat');
-        # and the not case of below the dot,
-        # the rule is that a dot stops a '*'
-        $check = '/CN=cat.black.blue.funspace.notTLD';
-        $have = $class->_in_san($check, $p_cert);
-        ok( !$have, 'not ok -- cat.black.blue.funspace.notTL');
-        #-------------------------------------------------------
-        # what if there is a mal formed space?
-        # friends made the funny of a self signed cert
-        # that ended in a '.' -- so need to test it will fail.
-        @san_list =( 
-            2, '*.red.funspace.notTLD.'
-        );
-        $check = '/CN=krypton-oozie.red.funspace.notTLD';
-        $have = $class->_in_san($check, $p_cert);
-        ok( !$have, 'not ok -- malformed SAN name');
-        #-----------------------------------------------
-        # need to guard the '.' in any of the sans as reges
-         @san_list =( 
-            2, '*.red.funspace.notTLD'
-        );
-        $check = '/CN=krypton-oozieDred.funspace.notTLD';
-        $have = $class->_in_san($check, $p_cert);
-        ok( !$have, 'not ok -- malformed SAN name');
         
+        foreach my $test (@tests) {
+             my ($san, $cn,$want, $label) =  @{$test}{qw(san cn want label)};
+             @san_list = @{$san};
+             my $have = $class->_in_san($cn, $p_cert);
+             is($have, $want, $label);
+        }
     }
     return;
 }
 
+sub test__cn_match {
+    my $class = class_under_test();
+    can_ok( $class, '_cn_match' );
+
+    # [ common_name , san_name, must_match , 'label' ]
+
+    my @fail_cases = (
+        ['hostbar.foo' ,'ho*bar.foo'    ,0, 'inline wildcard' ],
+        ['host.cat.foo','host.*.foo'    ,0, 'wildcard between levels' ],
+        ['host.foo.bar','*foo.bar'      ,0, 'wild card without a dot'],
+        ['abcdfoo.com' ,'*.foo.com'     ,0, 'different domain name'],
+        ['*.foo.com'   ,'*.foo.com'     ,0, 'wild card query CN must be FQDN'],
+        ['baz.foo.bar' ,'*.red.foo.bar' ,0, 'wild card from the section below'],
+        ['baz.foo.bar' ,'*.foo.bar.'    ,0, 'extra dot in SAN -- "dns style" dot at the end' ],
+    );
+    my @ok_cases = (
+        ['baz.foo.bar' ,'baz.foo.bar'   ,1, 'matches directly' ],
+        ['baz.foo.bar' ,'*.foo.bar'     ,1, 'matches by wild card' ],
+    );
+    # Include these non-dns-specific-cases, as they could be things that
+    # might be passed in the /CN= and be a part of the SAN, but it is 
+    # not quite clear which way they should be addressed. Nor is it clear
+    # that they should be rejected by the _cn_match()
+    my @non_dns_specific_cases = (
+        ['127.0.0.1'   , '127.0.0.1'    ,1, 'dotQuad notation' ],
+        ['bob@bob.com' , 'bob@bob.com'  ,1, 'email compare' ],
+        ['schem://host', 'schem://host' ,1, 'url compare' ],
+    );
+    my @tests = (@fail_cases, @ok_cases, @non_dns_specific_cases );
+    
+    # now we can just iterate over the groups
+    foreach my $test ( @tests) {
+        my ( $cn, $san_dns, $must_match, $label ) = @{$test};
+        my $match = $class->_cn_match($cn, $san_dns);
+        my $test_label = sprintf("%12s ~ %14s : %s", $cn,$san_dns,$label);
+        is($match, $must_match, $test_label);
+    }
+    
+    return;
+}
 # the end

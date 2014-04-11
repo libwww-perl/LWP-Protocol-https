@@ -50,42 +50,60 @@ EOT
     return (%ssl_opts, $self->SUPER::_extra_sock_opts);
 }
 
+#------------------------------------------------------------
+# _cn_match($common_name, $san_name) 
+#  common_name: an IA5String
+#  san_name: subjectAltName
+# initially we were only concerned with the dNSName
+# and the 'left-most' only wildcard as noted in 
+#   https://tools.ietf.org/html/rfc6125#section-6.4.3
+# this method does not match any wildcarding in the
+# domain name as listed in section-6.4.3.3
+#
+sub _cn_match {
+    my( $me, $common_name, $san_name ) = @_;
 
-# this will provide a fix to the basic problem
-# we simply ask if there is a subjectAltName,
-# and walked through them, dropping the type
-# to see if the name is verifiable. 
+    # /CN has a '*.' prefix
+    # MUST be an FQDN -- fishing?
+    return 0 if( $common_name =~ /^\*\./ );
+    
+    my $re = q{}; # empty string
+
+     # turn a leading "*." into a regex
+    if( $san_name =~ /^\*\./ ) {
+        $san_name =~ s/\*//;
+        $re = "[^.]+";
+    }
+
+      # quotemeta the rest and match anchored
+    if( $common_name =~ /^$re\Q$san_name\E$/ ) {
+        return 1;
+    }
+    return 0;
+}
+
+#-------------------------------------------------------
+# _in_san( cn, cert )
+#  'cn' of the form  /CN=host_to_check ( "Common Name" form )
+#  'cert' any object that implements a peer_certificate('subjectAltNames') method
+#   which will return an array of  ( type-id, value ) pairings per
+#   http://tools.ietf.org/html/rfc5280#section-4.2.1.6
+# if there is no subjectAltNames there is nothing more to do.
+# currently we have a _cn_match() that will allow for simple compare.
 sub _in_san
 {
-    my($me, $check, $cert) = @_;
+    my($me, $cn, $cert) = @_;
 	
-	# we can return early if there are no SAN options.
+	  # we can return early if there are no SAN options.
 	my @sans = $cert->peer_certificate('subjectAltNames');
 	return unless scalar @sans; 
 	
-	# this is about denuding the the '/CN=' prefix
-	# so that we have less problems with the comparison
-    my $de_cn = $check;
-	$de_cn =~ s/.*=//;
-	
-	# we will store the regex we compare the de_cn value
-	# and if we have a match we will return early.
-    my $re ;
-	
-    # http://tools.ietf.org/html/rfc5280#section-4.2.1.6
-    # provides the defition of ( type-id, value ) pairing
-    # hence we need to splice them out two by two.
-    while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {  
-        # quotemeta() beforehand, and then change the wildcard
-        # to a perlre if we start the string with w '*' 
-        my $re = quotemeta($value);
-        if ($re =~ /^\\\*/) {
-            $re =~ s/^\\\*/[^.]+/;
-        }
-        # compare the de_cn with our 
-        if( $de_cn =~ /^$re$/ ) {
-            return 'ok';
-        }
+	(my $common_name = $cn) =~ s/.*=//; # strip off the prefix.
+   
+      # get the ( type-id, value ) pairwise
+      # currently only the basic CN to san_name check
+    while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {
+        return 'ok' if $me->_cn_match($common_name,$value);
     }
     return;
 }
