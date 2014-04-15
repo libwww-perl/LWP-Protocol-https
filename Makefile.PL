@@ -16,6 +16,7 @@ WriteMakefile(
 	'Net::HTTPS' => 6,
 	'IO::Socket::SSL' => "1.54",
 	'Mozilla::CA' => "20110101",
+	'Net::SSLeay' => 0
     },
     META_MERGE => {
 	resources => {
