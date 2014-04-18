@@ -1,3 +1,7 @@
+######################################################################
+    LWP::Protocol::https 6.06
+######################################################################
+
 NAME
     LWP::Protocol::https - Provide https support for LWP::UserAgent
 
@@ -8,16 +12,16 @@ SYNOPSIS
       $res = $ua->get("https://www.example.com");
 
 DESCRIPTION
-    The LWP::Protocol::https module provide support for using https schemed
+    The LWP::Protocol::https module provides support for using https schemed
     URLs with LWP. This module is a plug-in to the LWP protocol handling, so
     you don't use it directly. Once the module is installed LWP is able to
     access sites using HTTP over SSL/TLS.
 
-    If hostname verification is requested by LWP::UserAgent's `ssl_opts',
-    and neither `SSL_ca_file' nor `SSL_ca_path' is set, then `SSL_ca_file'
+    If hostname verification is requested by LWP::UserAgent's "ssl_opts",
+    and neither "SSL_ca_file" nor "SSL_ca_path" is set, then "SSL_ca_file"
     is implied to be the one provided by Mozilla::CA. If the Mozilla::CA
     module isn't available SSL requests will fail. Either install this
-    module, set up an alternative `SSL_ca_file' or disable hostname
+    module, set up an alternative "SSL_ca_file" or disable hostname
     verification.
 
     This module used to be bundled with the libwww-perl, but it was

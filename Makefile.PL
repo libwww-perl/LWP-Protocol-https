@@ -12,7 +12,7 @@ WriteMakefile(
     LICENSE => "perl",
     MIN_PERL_VERSION => 5.008001,
     PREREQ_PM => {
-	'LWP::UserAgent' => '6.04',
+	'LWP::UserAgent' => '6.06',
 	'Net::HTTPS' => 6,
 	'IO::Socket::SSL' => "1.54",
 	'Mozilla::CA' => "20110101",

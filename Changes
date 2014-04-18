@@ -1,4 +1,33 @@
 _______________________________________________________________________________
+2014-04-18 LWP-Protocol-https 6.06
+
+Mike Schilli (3):
+      Merge pull request #12 from drieux/subjectAltName
+      Merge pull request #9 from chorny/master
+      Updated libwww requirement to 6.06 to fix failing t/proxy.t test cases.
+
+Gisle Aas (2):
+      Getopt::Long isn't actually used
+      Merge pull request #7 from noxxi/master
+
+Alexandr Ciornii (1):
+      better diagnostics in case of failures in apache.t
+
+Karen Etheridge (1):
+      Merge pull request #8 from cpansprout/patch-1
+
+Steffen Ullrich (1):
+      correct behavior for https_proxy, this goes together with change to 
+      libwww-perl cb80c2ddb7, new method _upgrade_sock in LWP::Protocol::https
+
+cpansprout (1):
+      Typo fix: envirionment =~ s/io/o/
+
+drieux (1):
+      support for subjectAltName
+
+
+_______________________________________________________________________________
 2013-04-29 LWP-Protocol-https 6.04
 
 Fix IO::Socket::SSL warnings when not verifying hostname.
