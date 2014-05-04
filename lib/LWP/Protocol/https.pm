@@ -20,7 +20,11 @@ sub _extra_sock_opts
 	$ssl_opts{SSL_verifycn_scheme} = 'www';
     }
     else {
-	$ssl_opts{SSL_verifycn_scheme} = 'none';
+	if ( $Net::HTTPS::SSL_SOCKET_CLASS eq 'Net::SSL' ) {
+	    $ssl_opts{SSL_verifycn_scheme} = '';
+	} else {
+	    $ssl_opts{SSL_verifycn_scheme} = 'none';
+	}
     }
     if ($ssl_opts{SSL_verify_mode}) {
 	unless (exists $ssl_opts{SSL_ca_file} || exists $ssl_opts{SSL_ca_path}) {
