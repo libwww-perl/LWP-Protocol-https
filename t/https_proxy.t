@@ -66,7 +66,10 @@ my %ua;
 $ua{noproxy} = LWP::UserAgent->new(
     keep_alive => 10, # size of connection cache
     # server does not know the expected name and returns generic certificate
-    ssl_opts => { verify_hostname => 0 }
+    ssl_opts => { 
+	verify_hostname => 0, 
+	SSL_ca_file => $cafile,
+    }
 );
 
 $ua{proxy} = LWP::UserAgent->new(
