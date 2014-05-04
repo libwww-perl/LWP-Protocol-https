@@ -29,25 +29,29 @@ sub _extra_sock_opts
     }
     if ($ssl_opts{SSL_verify_mode}) {
 	unless (exists $ssl_opts{SSL_ca_file} || exists $ssl_opts{SSL_ca_path}) {
-	    eval {
+	    if ($Net::HTTPS::SSL_SOCKET_CLASS eq 'IO::Socket::SSL'
+		&& defined &IO::Socket::SSL::default_ca
+		&& IO::Socket::SSL::default_ca() ) {
+		# IO::Socket::SSL has a usable default CA
+	    } elsif ( my $cafile = eval {
 		require Mozilla::CA;
-	    };
-	    if ($@) {
-		if ($@ =! /^Can't locate Mozilla\/CA\.pm/) {
-		    $@ = <<'EOT';
-Can't verify SSL peers without knowing which Certificate Authorities to trust
+		Mozilla::CA::SSL_ca_file()
+	    }) {
+		# use Mozilla::CA
+		$ssl_opts{SSL_ca_file} = $cafile;
+	    } else {
+		die <<'EOT';
+Can't verify SSL peers without knowing which Certificate Authorities to trust.
 
 This problem can be fixed by either setting the PERL_LWP_SSL_CA_FILE
-environment variable or by installing the Mozilla::CA module.
+environment variable to the file where your trusted CA are, or by installing
+the Mozilla::CA module for set of commonly trusted CAs.
 
-To disable verification of SSL peers set the PERL_LWP_SSL_VERIFY_HOSTNAME
-environment variable to 0.  If you do this you can't be sure that you
-communicate with the expected peer.
+To completly disable the verification that you talk to the correct SSL peer you
+can set SSL_verify_mode to 0 within ssl_opts.  But, if you do this you can't be
+sure that you communicate with the expected peer.
 EOT
 		}
-		die $@;
-	    }
-	    $ssl_opts{SSL_ca_file} = Mozilla::CA::SSL_ca_file();
 	}
     }
     $self->{ssl_opts} = \%ssl_opts;
