@@ -1,6 +1,6 @@
 use warnings;
 use strict;
-use Test::More tests => 20;
+use Test::More;
 #--------------------------------------------------------------
 # this is just for testing the '_in_san()' method
 #--------------------------------------------------------------
@@ -134,6 +134,20 @@ sub test__extra_sock_opts {
             },
             "SSL verification done"
         );
+
+        $class->{ua}{ssl_opts} = { };
+        %options = $class->_extra_sock_opts();
+        is_deeply(
+            \%options,
+            {
+                SSL_verifycn_scheme => 'www',
+                SSL_verify_mode     => 1,
+                SSL_ca_file         => '/var/tmp/meuk'
+            },
+            "SSL verification done"
+        );
     }
 }
+
+done_testing();
 # the end
