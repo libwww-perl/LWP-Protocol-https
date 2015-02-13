@@ -179,6 +179,14 @@ LWP::Protocol::https - Provide https support for LWP::UserAgent
 
   $ua = LWP::UserAgent->new(ssl_opts => { verify_hostname => 1 });
   $res = $ua->get("https://www.example.com");
+  
+  # specify a CA path
+  $ua = LWP::UserAgent->new(
+      ssl_opts => { 
+          SSL_ca_path     => '/etc/ssl/certs', 
+          verify_hostname => 1, 
+      }
+  );
 
 =head1 DESCRIPTION
 
