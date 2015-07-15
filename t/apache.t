@@ -2,11 +2,11 @@
 
 use strict;
 use Test::More;
+use Test::RequiresInternet 'www.apache.org' => 443;
 
 use LWP::UserAgent;
 
 my $ua = LWP::UserAgent->new( ssl_opts => {verify_hostname => 0} );
-plan skip_all => "Not online" unless $ua->is_online;
 
 plan tests => 5;
 
