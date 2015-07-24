@@ -16,6 +16,8 @@ WriteMakefile(
 	'Net::HTTPS' => 6,
 	'IO::Socket::SSL' => "1.54",
 	'Mozilla::CA' => "20110101",
+    },
+    TEST_REQUIRES => {
 	'Test::RequiresInternet' => 0,
     },
     META_MERGE => {
