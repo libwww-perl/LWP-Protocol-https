@@ -9,7 +9,8 @@ WriteMakefile(
     VERSION_FROM => 'lib/LWP/Protocol/https.pm',
     ABSTRACT_FROM => 'lib/LWP/Protocol/https.pm',
     AUTHOR => 'Gisle Aas <gisle@activestate.com>',
-    LICENSE => "perl",
+    LICENSE => 'perl_5',
+
     MIN_PERL_VERSION => 5.008001,
     PREREQ_PM => {
 	'LWP::UserAgent' => '6.06',
