@@ -1,6 +1,8 @@
 package LWP::Protocol::https;
 
 use strict;
+use warnings;
+
 our $VERSION = '6.11';
 
 use base qw(LWP::Protocol::http);
