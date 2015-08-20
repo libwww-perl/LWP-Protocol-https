@@ -1,6 +1,7 @@
 package LWP::Protocol::https;
 
 use strict;
+use warnings;
 our $VERSION = "6.06";
 
 require LWP::Protocol::http;
