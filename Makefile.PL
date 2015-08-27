@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
                     'LWP::UserAgent' => '6.06',
                     'Net::HTTPS' => 6,
                     'IO::Socket::SSL' => "1.54",
-                    'Mozilla::CA' => "20110101",
+                    'Mozilla::CA' => "20150826",
                     'perl' => '5.008001',
                 },
             },
