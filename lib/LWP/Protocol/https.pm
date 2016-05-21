@@ -29,7 +29,7 @@ sub _extra_sock_opts
 		require Mozilla::CA;
 	    };
 	    if ($@) {
-		if ($@ =! /^Can't locate Mozilla\/CA\.pm/) {
+		if ($@ =~ /^Can't locate Mozilla\/CA\.pm/) {
 		    $@ = <<'EOT';
 Can't verify SSL peers without knowing which Certificate Authorities to trust
 
