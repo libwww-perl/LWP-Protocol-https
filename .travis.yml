@@ -9,11 +9,9 @@ perl:
   - "5.10"
   - "5.8"
 env:
-  - AUTOMATED_TESTING=1
-  - AUTHOR_TESTING=1
-  - RELEASE_TESTING=1
+  - "AUTOMATED_TESTING=1 AUTHOR_TESTING=1 RELEASE_TESTING=1"
 install:
-  - cpanm -n IO::Socket::SSL Test::Pod Test::Pod::Coverage
+  - cpanm -n IO::Socket::SSL Test::Pod Test::Pod::Coverage Test::Spelling Pod::Wordlist
   - cpanm -n --installdeps .
   - prove -lr xt
 sudo: false
