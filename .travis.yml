@@ -15,8 +15,6 @@ env:
     - RELEASE_TESTING=1
     - HARNESS_OPTIONS=j9
 install:
-  - cpanm -n IO::Socket::Socks IO::Socket::SSL Net::DNS::Native Test::Pod Test::Pod::Coverage
+  - cpanm -n IO::Socket::SSL Test::Pod Test::Pod::Coverage
   - cpanm -n --installdeps .
 sudo: false
-notifications:
-  email: false
