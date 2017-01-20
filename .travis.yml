@@ -9,12 +9,11 @@ perl:
   - "5.10"
   - "5.8"
 env:
-  global:
-    - AUTOMATED_TESTING=1
-    - AUTHOR_TESTING=1
-    - RELEASE_TESTING=1
-    - HARNESS_OPTIONS=j9
+  - AUTOMATED_TESTING=1
+  - AUTHOR_TESTING=1
+  - RELEASE_TESTING=1
 install:
   - cpanm -n IO::Socket::SSL Test::Pod Test::Pod::Coverage
   - cpanm -n --installdeps .
+  - prove -lr xt
 sudo: false
