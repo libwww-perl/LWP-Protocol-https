@@ -152,7 +152,7 @@ if ( $Net::HTTPS::SSL_SOCKET_CLASS->can('start_SSL')) {
     *_upgrade_sock = sub {
 	my ($self,$sock,$url) = @_;
 	$sock = LWP::Protocol::https::Socket->start_SSL( $sock,
-	    SSL_verifycn_name => $url->host,
+	    SSL_hostname => $url->host,
 	    $self->_extra_sock_opts,
 	);
 	$@ = LWP::Protocol::https::Socket->errstr if ! $sock;
