@@ -1,5 +1,6 @@
 language: perl
 perl:
+  - "5.24"
   - "5.22"
   - "5.20"
   - "5.18"
@@ -10,8 +11,12 @@ perl:
   - "5.8"
 env:
   - "AUTOMATED_TESTING=1 AUTHOR_TESTING=1 RELEASE_TESTING=1"
+before_install:
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init
+  - build-perl
+  - perl -V
 install:
   - cpanm -n IO::Socket::SSL Test::Pod Test::Pod::Coverage Test::Spelling Pod::Wordlist
   - cpanm -n --installdeps .
-  - prove -lr xt
 sudo: false
