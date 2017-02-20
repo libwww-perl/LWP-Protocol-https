@@ -1,5 +1,7 @@
 Release history for LWP-Protocol-https
 
+6.08
+
 6.07      2017-02-19
     - Cleaned up the Changes log
     - Explicitly add hostname for SNI to start_SSL (GH PR#17)
