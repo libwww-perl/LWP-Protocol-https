@@ -1,7 +1,7 @@
 package LWP::Protocol::https;
 
 use strict;
-our $VERSION = "6.06";
+our $VERSION = "6.07";
 
 require LWP::Protocol::http;
 our @ISA = qw(LWP::Protocol::http);
@@ -51,11 +51,11 @@ EOT
 }
 
 #------------------------------------------------------------
-# _cn_match($common_name, $san_name) 
+# _cn_match($common_name, $san_name)
 #  common_name: an IA5String
 #  san_name: subjectAltName
 # initially we were only concerned with the dNSName
-# and the 'left-most' only wildcard as noted in 
+# and the 'left-most' only wildcard as noted in
 #   https://tools.ietf.org/html/rfc6125#section-6.4.3
 # this method does not match any wildcarding in the
 # domain name as listed in section-6.4.3.3
@@ -66,7 +66,7 @@ sub _cn_match {
     # /CN has a '*.' prefix
     # MUST be an FQDN -- fishing?
     return 0 if( $common_name =~ /^\*\./ );
-    
+
     my $re = q{}; # empty string
 
      # turn a leading "*." into a regex
@@ -93,13 +93,13 @@ sub _cn_match {
 sub _in_san
 {
     my($me, $cn, $cert) = @_;
-	
+
 	  # we can return early if there are no SAN options.
 	my @sans = $cert->peer_certificate('subjectAltNames');
-	return unless scalar @sans; 
-	
+	return unless scalar @sans;
+
 	(my $common_name = $cn) =~ s/.*=//; # strip off the prefix.
-   
+
       # get the ( type-id, value ) pairwise
       # currently only the basic CN to san_name check
     while( my ( $type_id, $value ) = splice( @sans, 0, 2 ) ) {
@@ -179,12 +179,12 @@ LWP::Protocol::https - Provide https support for LWP::UserAgent
 
   $ua = LWP::UserAgent->new(ssl_opts => { verify_hostname => 1 });
   $res = $ua->get("https://www.example.com");
-  
+
   # specify a CA path
   $ua = LWP::UserAgent->new(
-      ssl_opts => { 
-          SSL_ca_path     => '/etc/ssl/certs', 
-          verify_hostname => 1, 
+      ssl_opts => {
+          SSL_ca_path     => '/etc/ssl/certs',
+          verify_hostname => 1,
       }
   );
 

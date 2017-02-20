@@ -1,60 +1,37 @@
-_______________________________________________________________________________
-2014-04-18 LWP-Protocol-https 6.06
+Release history for LWP-Protocol-https
 
-Mike Schilli (3):
-      Merge pull request #12 from drieux/subjectAltName
-      Merge pull request #9 from chorny/master
-      Updated libwww requirement to 6.06 to fix failing t/proxy.t test cases.
+6.07      2017-02-19
+    - Cleaned up the Changes log
+    - 
 
-Gisle Aas (2):
-      Getopt::Long isn't actually used
-      Merge pull request #7 from noxxi/master
+6.06      2014-04-18
+    - Merge pull request #12 from drieux/subjectAltName
+    - Merge pull request #9 from chorny/master
+    - Updated libwww requirement to 6.06 to fix failing t/proxy.t test cases.
+    - Getopt::Long isn't actually used
+    - Merge pull request #7 from noxxi/master
+    - better diagnostics in case of failures in apache.t
+    - Merge pull request #8 from cpansprout/patch-1
+    - correct behavior for https_proxy, this goes together with change to
+    - libwww-perl cb80c2ddb7, new method _upgrade_sock in LWP::Protocol::https
+    - Typo fix: envirionment =~ s/io/o/
+    - support for subjectAltName
 
-Alexandr Ciornii (1):
-      better diagnostics in case of failures in apache.t
+6.04      2013-04-29
+    - Fix IO::Socket::SSL warnings when not verifying hostname.
+    - Doc spelling fix.
 
-Karen Etheridge (1):
-      Merge pull request #8 from cpansprout/patch-1
+6.03      2012-02-18
+    - Skip test if offline [RT#74163]
+    - Typo fixes
+    - Restore perl-5.8.1 compatibility.
 
-Steffen Ullrich (1):
-      correct behavior for https_proxy, this goes together with change to 
-      libwww-perl cb80c2ddb7, new method _upgrade_sock in LWP::Protocol::https
-
-cpansprout (1):
-      Typo fix: envirionment =~ s/io/o/
-
-drieux (1):
-      support for subjectAltName
-
-
-_______________________________________________________________________________
-2013-04-29 LWP-Protocol-https 6.04
-
-Fix IO::Socket::SSL warnings when not verifying hostname.
-
-Doc spelling fix.
-
-
-
-_______________________________________________________________________________
-2012-02-18 LWP-Protocol-https 6.03
-
-Skip test if offline [RT#74163]
-
-Typo fixes
-
-Restore perl-5.8.1 compatibility.
-
-
-
-_______________________________________________________________________________
-2011-03-27 LWP-Protocol-https 6.02
-
-Initial release of LWP-Protocol-https as a separate distribution. There are no code
-changes besides setting the version number since libwww-perl-6.01.
-
-The LWP::Protocol::https module used to be bundled with the libwww-perl
-distribution, but it was unbundled in v6.02 in order to be able to declare its
-dependencies properly for the CPAN tool chain.  Applications that need https
-support can just declare their dependency on LWP::Protocol::https and will no
-longer need to know what underlying modules to install.
+6.02      2011-03-27
+    - Initial release of LWP-Protocol-https as a separate distribution. There
+      are no code changes besides setting the version number since
+      libwww-perl-6.01.
+    - The LWP::Protocol::https module used to be bundled with the libwww-perl
+      distribution, but it was unbundled in v6.02 in order to be able to declare
+      its dependencies properly for the CPAN tool chain.  Applications that need
+      https support can just declare their dependency on LWP::Protocol::https
+      and will no longer need to know what underlying modules to install.
