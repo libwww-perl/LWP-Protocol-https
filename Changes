@@ -3,6 +3,9 @@ Release history for LWP-Protocol-https
 6.07      2017-02-19
     - Cleaned up the Changes log
     - Explicitly add hostname for SNI to start_SSL (GH PR#17)
+    - Fix the license name
+    - Update some documentation on SSL args
+    - Fix bug when checking for Mozilla::CA (GH PR#29)
 
 6.06      2014-04-18
     - Merge pull request #12 from drieux/subjectAltName
