@@ -24,6 +24,9 @@
          "requires" : {
             "ExtUtils::MakeMaker" : "0",
             "perl" : "5.008001"
+         },
+         "suggests" : {
+            "JSON::PP" : "2.27300"
          }
       },
       "develop" : {
@@ -599,7 +602,7 @@
       "Andreas J. Koenig <andreas.koenig@anima.de>",
       "Bill Mann <wfmann@alum.mit.edu>",
       "Bron Gondwana <brong@fastmail.fm>",
-      "Chase Whitener <cwhitener@gmail.com>",
+      "Chase Whitener <capoeirab@cpan.org>",
       "Christopher J. Madsen <cjm@cpan.org>",
       "cpansprout <cpansprout@gmail.com>",
       "Dan Book <grinnz@grinnz.com>",
@@ -611,10 +614,7 @@
       "Father Chrysostomos <sprout@cpan.org>",
       "FWILES <FWILES@cpan.org>",
       "Gavin Peters <gpeters@deepsky.com>",
-      "Gisle Aas <aas@oslonett.no>",
-      "Gisle Aas <gisle.aas@it.uib.no>",
       "Gisle Aas <gisle@aas.no>",
-      "Gisle Aas <gisle@baux-2.lan>",
       "Graeme Thompson <Graeme.Thompson@mobilecohesion.com>",
       "Hans-H. Froehlich <hfroehlich@co-de-co.de>",
       "Ian Kilgore <iank@cpan.org>",
@@ -625,11 +625,8 @@
       "Karen Etheridge <ether@cpan.org>",
       "Leo Lapworth <leo@cuckoo.org>",
       "Mark Stosberg <mark@stosberg.com>",
-      "Mark Stosberg <MARKSTOS@cpan.org>",
-      "Mark Stosberg <mark@summersault.com>",
       "Michael G. Schwern <schwern@pobox.com>",
       "Mike Schilli <github@perlmeister.com>",
-      "Mike Schilli <mschilli@yahoo-inc.com>",
       "murphy <murphy@genome.chop.edu>",
       "Olaf Alders <olaf@wundersolutions.com>",
       "Ondrej Hanak <ondrej.hanak@ubs.com>",
@@ -642,7 +639,6 @@
       "sasao <sasao@yugen.org>",
       "Sean M. Burke <sburke@cpan.org>",
       "Slaven Rezic <slaven@rezic.de>",
-      "Slaven Rezic <srezic@iconmobile.com>",
       "Spiros Denaxas <s.denaxas@gmail.com>",
       "Steffen Ullrich <Steffen_Ullrich@genua.de>",
       "Steve Hay <SteveHay@planit.com>",
@@ -652,7 +648,7 @@
       "Tony Finch <dot@dotat.at>",
       "Toru Yamaguchi <zigorou@cpan.org>",
       "uid39246 <uid39246>",
-      "Ville Skytta <ville.skytta@iki.fi>",
+      "Ville Skytt\u00e4 <ville.skytta@iki.fi>",
       "Yuri Karaban <tech@askold.net>",
       "Yury Zavarin <yury.zavarin@gmail.com>",
       "Zefram <zefram@fysh.org>"
