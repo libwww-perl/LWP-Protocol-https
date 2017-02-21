@@ -1,14 +1,15 @@
 use warnings;
 use strict;
-use Test::More tests => 17;
+use Test::More;
 #--------------------------------------------------------------
 # this is just for testing the '_in_san()' method
 #--------------------------------------------------------------
 use LWP::Protocol::https;
-sub class_under_test { return 'LWP::Protocol::https'; }
+sub class_under_test { return bless {}, 'LWP::Protocol::https'; }
 #-----------------------------
 test__in_san();
 test__cn_match();
+test__extra_sock_opts();
 
 #-----------------
 sub test__in_san {
@@ -106,4 +107,47 @@ sub test__cn_match {
     
     return;
 }
+
+sub test__extra_sock_opts {
+    my $class = class_under_test();
+    can_ok( $class, '_extra_sock_opts' );
+
+    $class->{ua}{ssl_opts} = { verify_hostname => 0 };
+    my %options = $class->_extra_sock_opts();
+    is_deeply( \%options, { SSL_verify_mode => 0, }, "No SSL verification done");
+
+    {
+        no warnings qw(redefine once);
+        $INC{'Mozilla/CA.pm'} = 1;
+        local *Mozilla::CA::SSL_ca_file = sub {
+            return '/var/tmp/meuk';
+        };
+
+        $class->{ua}{ssl_opts} = { verify_hostname => 1 };
+        my %options = $class->_extra_sock_opts();
+        is_deeply(
+            \%options,
+            {
+                SSL_verifycn_scheme => 'www',
+                SSL_verify_mode     => 1,
+                SSL_ca_file         => '/var/tmp/meuk'
+            },
+            "SSL verification done"
+        );
+
+        $class->{ua}{ssl_opts} = { };
+        %options = $class->_extra_sock_opts();
+        is_deeply(
+            \%options,
+            {
+                SSL_verifycn_scheme => 'www',
+                SSL_verify_mode     => 1,
+                SSL_ca_file         => '/var/tmp/meuk'
+            },
+            "SSL verification done"
+        );
+    }
+}
+
+done_testing();
 # the end
