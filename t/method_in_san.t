@@ -20,20 +20,20 @@ sub test__in_san {
 
         # a bit of a monkey patch to make it simpler to test
         # the various basic cases under test
-        
+
         my $p_cert = bless {}, 'fauxCert';
         my @san_list;
         my $p_peer_certificate = 'fauxCert::peer_certificate';
         local *{$p_peer_certificate}  = sub {
              return @san_list;
         };
-        
+
         #-----------------------------------
         # We need three simple cases, one without SAN
         # one with a pass, one with a fail connection.
         # until we need to deal with more than just the simple dns_match
         # futureNote: what if we use the 'type_id' -- and need to dispatch
-        # to other than the '_cn_match()' method -- we may want to extend this 
+        # to other than the '_cn_match()' method -- we may want to extend this
         # basic list of tests.
         my @tests = (
             {
@@ -55,7 +55,7 @@ sub test__in_san {
                 'label' => 'CN not in SAN',
             }
         );
-        
+
         foreach my $test (@tests) {
              my ($san, $cn,$want, $label) =  @{$test}{qw(san cn want label)};
              @san_list = @{$san};
@@ -86,7 +86,7 @@ sub test__cn_match {
         ['baz.foo.bar' ,'*.foo.bar'     ,1, 'matches by wild card' ],
     );
     # Include these non-dns-specific-cases, as they could be things that
-    # might be passed in the /CN= and be a part of the SAN, but it is 
+    # might be passed in the /CN= and be a part of the SAN, but it is
     # not quite clear which way they should be addressed. Nor is it clear
     # that they should be rejected by the _cn_match()
     my @non_dns_specific_cases = (
@@ -95,7 +95,7 @@ sub test__cn_match {
         ['schem://host', 'schem://host' ,1, 'url compare' ],
     );
     my @tests = (@fail_cases, @ok_cases, @non_dns_specific_cases );
-    
+
     # now we can just iterate over the groups
     foreach my $test ( @tests) {
         my ( $cn, $san_dns, $must_match, $label ) = @{$test};
@@ -103,7 +103,6 @@ sub test__cn_match {
         my $test_label = sprintf("%12s ~ %14s : %s", $cn,$san_dns,$label);
         is($match, $must_match, $test_label);
     }
-    
+
     return;
 }
-# the end

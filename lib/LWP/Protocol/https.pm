@@ -3,8 +3,7 @@ package LWP::Protocol::https;
 use strict;
 our $VERSION = '6.08';
 
-require LWP::Protocol::http;
-our @ISA = qw(LWP::Protocol::http);
+use base qw(LWP::Protocol::http);
 require Net::HTTPS;
 
 sub socket_type
@@ -164,7 +163,7 @@ if ( $Net::HTTPS::SSL_SOCKET_CLASS->can('start_SSL')) {
 #-----------------------------------------------------------
 package LWP::Protocol::https::Socket;
 
-our @ISA = qw(Net::HTTPS LWP::Protocol::http::SocketMethods);
+use base qw(Net::HTTPS LWP::Protocol::http::SocketMethods);
 
 1;
 
@@ -198,7 +197,7 @@ to access sites using HTTP over SSL/TLS.
 
 If hostname verification is requested by LWP::UserAgent's C<ssl_opts>, and
 neither C<SSL_ca_file> nor C<SSL_ca_path> is set, then C<SSL_ca_file> is
-implied to be the one provided by Mozilla::CA.  If the Mozilla::CA module
+implied to be the one provided by L<Mozilla::CA>.  If the Mozilla::CA module
 isn't available SSL requests will fail.  Either install this module, set up an
 alternative C<SSL_ca_file> or disable hostname verification.
 
@@ -212,9 +211,11 @@ underlying modules to install.
 
 L<IO::Socket::SSL>, L<Crypt::SSLeay>, L<Mozilla::CA>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
-Copyright 1997-2011 Gisle Aas.
+Copyright (c) 1997-2011 Gisle Aas.
 
-This library is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.
+This library is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
