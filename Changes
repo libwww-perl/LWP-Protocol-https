@@ -2,6 +2,7 @@ Release history for LWP-Protocol-https
 
 {{$NEXT}}
     - Migrated to DZil (GH PR#30)
+    - Moved bug tracking from RT to GitHub
 
 6.07      2017-02-19
     - Cleaned up the Changes log
