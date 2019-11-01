@@ -115,7 +115,7 @@ sub _check_sock
         my $cert = $sock->get_peer_certificate ||
             die "Missing SSL certificate";
         my $subject = $cert->subject_name;
-        unless ( $subject =~ /$check/ ) {
+        unless ( defined $subject && ( $subject =~ /$check/ ) ) {
             my $ok = $self->_in_san( $check, $cert);
             die "Bad SSL certificate subject: '$subject' !~ /$check/"
                 unless $ok;
