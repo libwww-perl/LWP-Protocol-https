@@ -1,6 +1,6 @@
 Release history for LWP-Protocol-https
 
-{{$NEXT}}
+6.08      2020-03-23 20:19:22Z (TRIAL RELEASE)
     - Add defined check (GH#53) (Mohammad S Anwar)
     - Fix copyright year (GH#55) (Olaf Alders)
     - Upgrade Mozilla::CA dependency; originally #26 by dolmen (GH#54) (Shoichi Kaji)
