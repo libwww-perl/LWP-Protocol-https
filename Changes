@@ -1,8 +1,12 @@
 Release history for LWP-Protocol-https
 
 {{$NEXT}}
+    - Add defined check (GH#53) (Mohammad S Anwar)
+    - Fix copyright year (GH#55) (Olaf Alders)
+    - Upgrade Mozilla::CA dependency; originally #26 by dolmen (GH#54) (Shoichi Kaji)
+    - Adds coverage tests (GH#51) (Juan Julin Merelo Guervs)
     - Migrated to DZil (GH PR#30)
-    - Moved bug tracking from RT to GitHub
+    - Moved bug tracking from RT to GitHub (GH#48) (Olaf Alders)
 
 6.07      2017-02-19
     - Cleaned up the Changes log
