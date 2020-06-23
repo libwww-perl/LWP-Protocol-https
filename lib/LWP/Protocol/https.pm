@@ -129,6 +129,9 @@ sub _get_sock_info
     my $self = shift;
     $self->SUPER::_get_sock_info(@_);
     my($res, $sock) = @_;
+    if ($sock->can('get_sslversion') and my $sslversion = $sock->get_sslversion) {
+        $res->header("Client-SSL-Version" => $sslversion);
+    }
     $res->header("Client-SSL-Cipher" => $sock->get_cipher);
     my $cert = $sock->get_peer_certificate;
     if ($cert) {
