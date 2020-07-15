@@ -8,20 +8,50 @@ use LWP::UserAgent;
 
 my $ua = LWP::UserAgent->new( ssl_opts => {verify_hostname => 0} );
 
-plan tests => 5;
+plan tests => 2;
 
-my $res = $ua->simple_request(HTTP::Request->new(GET => "https://www.apache.org"));
+my $url = 'https://www.apache.org';
 
-ok($res->is_success);
-my $h = $res->header( 'X-Died' );
-is($h, undef, "no X-Died header");
-like($res->content, qr/Apache Software Foundation/);
+subtest "Request GET $url" => sub {
+    plan tests => 6;
 
-# test for RT #81948
-my $warn = '';
-$SIG{__WARN__} = sub { $warn = shift };
-$res = $ua->simple_request(HTTP::Request->new(GET => "https://www.apache.org"));
-ok($res->is_success);
-is($warn, '', "no warning seen");
+    my $res = $ua->simple_request(HTTP::Request->new(GET => $url));
+    ok($res->is_success, "success status");
 
-$res->dump(prefix => "# ");
+    my $h;
+
+    $h = 'X-Died';
+    my $x_died = $res->header($h);
+    is($x_died, undef, "no $h header");
+
+    $h = 'Client-SSL-Socket-Class';
+    my $socket_class = $res->header($h) || '';
+    ok($socket_class =~ /\S/, "have header $h");
+
+    SKIP: {
+        $h = 'Client-SSL-Version';
+        my $ssl_version = $res->header($h) || '';
+        my $h_test = $ssl_version =~ /^(SSL|TLS)v\d/i;
+        my $want_class = 'IO::Socket::SSL';
+        $h_test
+            or $socket_class eq $want_class
+            or skip "header $h only guaranteed when using $want_class", 1;
+        ok($h_test, "have header $h");
+    }
+
+    $h = 'Client-SSL-Cipher';
+    my $ssl_cipher = $res->header($h) || '';
+    ok($ssl_cipher =~ /\S/, "have header $h");
+
+    like($res->content, qr/Apache Software Foundation/, "found expected document content");
+};
+
+subtest "Check for warnings from GET $url (RT #81948)" => sub {
+    plan tests => 2;
+    my $warn = '';
+    $SIG{__WARN__} = sub { $warn = shift };
+    my $res = $ua->simple_request(HTTP::Request->new(GET => $url));
+    ok($res->is_success, "success status");
+    is($warn, '', "no warning seen");
+    $res->dump(prefix => "# ");
+};
