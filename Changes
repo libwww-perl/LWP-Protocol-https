@@ -1,4 +1,6 @@
 Release history for LWP-Protocol-https
+
+{{$NEXT}}
     - Make available the version of SSL/TLS protocol used in the connection
       (GH#56) (Jon Jensen)
 
