@@ -26,7 +26,7 @@ to access sites using HTTP over SSL/TLS.
 
 If hostname verification is requested by LWP::UserAgent's `ssl_opts`, and
 neither `SSL_ca_file` nor `SSL_ca_path` is set, then `SSL_ca_file` is
-implied to be the one provided by [Mozilla::CA](https://metacpan.org/pod/Mozilla::CA).  If the Mozilla::CA module
+implied to be the one provided by [Mozilla::CA](https://metacpan.org/pod/Mozilla%3A%3ACA).  If the Mozilla::CA module
 isn't available SSL requests will fail.  Either install this module, set up an
 alternative `SSL_ca_file` or disable hostname verification.
 
@@ -38,7 +38,7 @@ underlying modules to install.
 
 # SEE ALSO
 
-[IO::Socket::SSL](https://metacpan.org/pod/IO::Socket::SSL), [Crypt::SSLeay](https://metacpan.org/pod/Crypt::SSLeay), [Mozilla::CA](https://metacpan.org/pod/Mozilla::CA)
+[IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL), [Crypt::SSLeay](https://metacpan.org/pod/Crypt%3A%3ASSLeay), [Mozilla::CA](https://metacpan.org/pod/Mozilla%3A%3ACA)
 
 # COPYRIGHT & LICENSE
 
