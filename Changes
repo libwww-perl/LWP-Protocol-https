@@ -1,4 +1,6 @@
 Release history for LWP-Protocol-https
+    - Make available the version of SSL/TLS protocol used in the connection
+      (GH#56) (Jon Jensen)
 
 6.08      2020-03-23 20:19:22Z (TRIAL RELEASE)
     - Add defined check (GH#53) (Mohammad S Anwar)
