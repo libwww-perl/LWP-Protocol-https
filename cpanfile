@@ -31,8 +31,10 @@ on 'test' => sub {
 
 on 'develop' => sub {
     requires 'Test::CheckManifest' => '1.29';
+    requires 'Test::CleanNamespaces';
     requires "Test::CPAN::Changes" => "0.19";
     requires 'Test::CPAN::Meta';
+    requires 'Test::Kwalitee';
     requires 'Test::Kwalitee'      => '1.22';
     requires 'Test::Pod::Spelling::CommonMistakes' => '1.000';
     #requires 'Try::Tiny'  => '0.24';
