@@ -36,7 +36,7 @@ matrix:
 env:
   global:
     - AUTHOR_TESTING=1
-    - RELEASE_TESTING=1
+    - RELEASE_TESTING=0
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
