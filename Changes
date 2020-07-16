@@ -1,5 +1,7 @@
 Release history for LWP-Protocol-https
 
+{{$NEXT}}
+
 6.09      2020-07-16 13:33:05Z
     - Make available the version of SSL/TLS protocol used in the connection
       (GH#56) (Jon Jensen)
