@@ -24,7 +24,7 @@ on 'test' => sub {
     requires "LWP::UserAgent" => "6.06";
     requires "perl" => "5.008001";
     requires "Socket" => "0";
-    requires "Test::More" => "0";
+    requires "Test::More" => "0.96";
     requires "Test::RequiresInternet" => "0";
     requires "warnings" => "0";
 };
