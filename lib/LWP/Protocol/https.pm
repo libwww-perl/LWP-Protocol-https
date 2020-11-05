@@ -46,7 +46,7 @@ EOT
 	}
     }
     $self->{ssl_opts} = \%ssl_opts;
-    return (%ssl_opts, $self->SUPER::_extra_sock_opts);
+    return (%ssl_opts, MultiHomed => 1, $self->SUPER::_extra_sock_opts);
 }
 
 #------------------------------------------------------------
