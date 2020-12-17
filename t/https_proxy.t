@@ -85,6 +85,10 @@ $ua{proxy_nokeepalive} = LWP::UserAgent->new(
 	SSL_ca_file => $cafile
     }
 );
+
+# both lower- and upper-case versions are accepted by `env_proxy`, and
+# the user may have any of them set: override them all
+$ENV{HTTP_PROXY} = $ENV{HTTPS_PROXY} =
 $ENV{http_proxy} = $ENV{https_proxy} = "http://foo:bar\@$saddr[0]";
 $ua{proxy}->env_proxy;
 $ua{proxy_nokeepalive}->env_proxy;
