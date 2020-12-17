@@ -243,7 +243,7 @@ sub _server {
     if ( $ssl_host ) {
 	my ($cert,$key) = @{
 	    $certs{$ssl_host} ||= do {
-		diag("creating cert for $ssl_host");
+		note("creating cert for $ssl_host");
 		my ($c,$k) = CERT_create(
 		    subject => { commonName => $ssl_host },
 		    issuer_cert => $cacert,
