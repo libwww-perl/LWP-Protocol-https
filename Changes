@@ -1,6 +1,9 @@
 Release history for LWP-Protocol-https
 
 {{$NEXT}}
+    - Fix #39 - prevent user env from breaking the test (GH#63) (Gianni
+      Ceccarelli)
+    - Include Net::SSLeay in reported prereqs (GH#60) (Olaf Alders)
     - Use GitHub as a bug tracker (GH#59) (Olaf Alders)
 
 6.09      2020-07-16 13:33:05Z
