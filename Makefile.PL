@@ -37,11 +37,11 @@ my %WriteMakefileArgs = (
     "IO::Socket::SSL::Utils" => 0,
     "LWP::UserAgent" => "6.06",
     "Socket" => 0,
-    "Test::More" => 0,
+    "Test::More" => "0.96",
     "Test::RequiresInternet" => 0,
     "warnings" => 0
   },
-  "VERSION" => "6.09",
+  "VERSION" => "6.10",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -60,7 +60,7 @@ my %FallbackPrereqs = (
   "Mozilla::CA" => 20180117,
   "Net::HTTPS" => 6,
   "Socket" => 0,
-  "Test::More" => 0,
+  "Test::More" => "0.96",
   "Test::RequiresInternet" => 0,
   "base" => 0,
   "strict" => 0,
