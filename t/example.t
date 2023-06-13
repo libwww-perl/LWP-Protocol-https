@@ -10,7 +10,7 @@ my $ua = LWP::UserAgent->new( ssl_opts => {verify_hostname => 0} );
 
 plan tests => 2;
 
-my $url = 'https://www.apache.org';
+my $url = 'https://www.example.com';
 
 subtest "Request GET $url" => sub {
     plan tests => 6;
@@ -43,7 +43,7 @@ subtest "Request GET $url" => sub {
     my $ssl_cipher = $res->header($h) || '';
     ok($ssl_cipher =~ /\S/, "have header $h");
 
-    like($res->content, qr/Apache Software Foundation/, "found expected document content");
+    like($res->content, qr/Example Domain/, "found expected document content");
 };
 
 subtest "Check for warnings from GET $url (RT #81948)" => sub {
