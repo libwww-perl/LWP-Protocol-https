@@ -4,9 +4,9 @@ use strict;
 use Test::More;
 use Test::RequiresInternet 'www.example.com' => 443;
 
-use LWP::UserAgent;
+use LWP::UserAgent ();
 
-my $ua = LWP::UserAgent->new( ssl_opts => {verify_hostname => 0} );
+my $ua = LWP::UserAgent->new( ssl_opts => { verify_hostname => 0 } );
 
 plan tests => 2;
 
