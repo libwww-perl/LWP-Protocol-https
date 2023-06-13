@@ -2,7 +2,7 @@
 
 use strict;
 use Test::More;
-use Test::RequiresInternet 'www.apache.org' => 443;
+use Test::RequiresInternet 'www.example.com' => 443;
 
 use LWP::UserAgent;
 
