@@ -4,21 +4,19 @@ name: dzil build and test
 on:
   push:
     branches:
-      - "*"
+      - "master"
   pull_request:
     branches:
       - "*"
-  schedule:
-    - cron: "15 4 * * 0" # Every Sunday morning
 
 jobs:
   build-job:
     name: Build distribution
     runs-on: ubuntu-latest
     container:
-      image: perldocker/perl-tester:5.32
+      image: perldocker/perl-tester:5.36
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Run Tests
         env:
           AUTHOR_TESTING: 1
@@ -30,15 +28,14 @@ jobs:
         with:
           name: build_dir
           path: build_dir
-        if: ${{ github.actor != 'nektos/act' }}
   coverage-job:
     needs: build-job
     runs-on: ubuntu-latest
     container:
-      image: perldocker/perl-tester:5.32
+      image: perldocker/perl-tester:5.36
     steps:
-      - uses: actions/checkout@v2 # codecov wants to be inside a Git repository
-      - uses: actions/download-artifact@master
+      - uses: actions/checkout@v3 # codecov wants to be inside a Git repository
+      - uses: actions/download-artifact@v3
         with:
           name: build_dir
           path: .
@@ -66,6 +63,8 @@ jobs:
           - "5.28"
           - "5.30"
           - "5.32"
+          - "5.34"
+          - "5.36"
         exclude:
           - os: windows-latest
             perl-version: "5.8"
@@ -79,6 +78,10 @@ jobs:
             perl-version: "5.16"
           - os: windows-latest
             perl-version: "5.32"
+          - os: windows-latest
+            perl-version: "5.34"
+          - os: windows-latest
+            perl-version: "5.36"
     name: Perl ${{ matrix.perl-version }} on ${{ matrix.os }}
     steps:
       - name: Set Up Perl
@@ -86,7 +89,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl-version }}
           distribution: strawberry # this option only used on Windows
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v3
         with:
           name: build_dir
           path: .
