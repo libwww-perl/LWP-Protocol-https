@@ -58,10 +58,10 @@ EOT
 # This is a subclass of LWP::Protocol::http.
 # That parent class calls ->_check_sock() during the
 # request method. This allows us to hook in and run checks
-sub _check_sock
-{
-    my($self, $req, $sock) = @_;
-}
+# sub _check_sock
+# {
+#     my($self, $req, $sock) = @_;
+# }
 
 sub _get_sock_info
 {
