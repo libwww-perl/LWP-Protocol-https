@@ -7,7 +7,6 @@ on 'runtime' => sub {
     requires "base" => "0";
     requires "IO::Socket::SSL" => "1.54";
     requires "LWP::Protocol::http" => "0";
-    #requires "LWP::Protocol::http::SocketMethods" => "0";
     requires "LWP::UserAgent" => "6.06";
     requires "Mozilla::CA" => "20180117";
     requires "Net::HTTPS" => "6";
@@ -37,5 +36,4 @@ on 'develop' => sub {
     requires 'Test::Kwalitee';
     requires 'Test::Kwalitee'      => '1.22';
     requires 'Test::Pod::Spelling::CommonMistakes' => '1.000';
-    #requires 'Try::Tiny'  => '0.24';
 };
