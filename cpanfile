@@ -5,7 +5,7 @@ on 'configure' => sub {
 
 on 'runtime' => sub {
     requires "base" => "0";
-    requires "IO::Socket::SSL" => "1.54";
+    requires "IO::Socket::SSL" => "1.970";
     requires "LWP::Protocol::http" => "0";
     requires "LWP::UserAgent" => "6.06";
     requires "Mozilla::CA" => "20180117";
