@@ -8,7 +8,6 @@ on 'runtime' => sub {
     requires "IO::Socket::SSL" => "1.970";
     requires "LWP::Protocol::http" => "0";
     requires "LWP::UserAgent" => "6.06";
-    requires "Mozilla::CA" => "20180117";
     requires "Net::HTTPS" => "6";
     requires "perl" => "5.008001";
     requires "strict" => "0";
