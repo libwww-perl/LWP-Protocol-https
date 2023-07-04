@@ -2,6 +2,7 @@ Release history for LWP-Protocol-https
 
 {{$NEXT}}
     - Remove Authority section from dist.ini (GH#64) (Olaf Alders)
+    - Add very basic diagnostic information via test (GH#73) (Olaf Alders)
 
 6.10      2020-12-17 15:42:06Z
     - Fix #39 - prevent user env from breaking the test (GH#63) (Gianni
