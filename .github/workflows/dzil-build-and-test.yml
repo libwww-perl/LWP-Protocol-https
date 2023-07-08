@@ -1,5 +1,5 @@
 ---
-name: dzil build and test
+name: test
 
 on:
   push:
@@ -98,7 +98,4 @@ jobs:
         with:
           cpanfile: "cpanfile"
           args: "--with-suggests --with-recommends --with-test"
-      - run: prove -l t xt
-        env:
-          AUTHOR_TESTING: 1
-          RELEASE_TESTING: 1
+      - run: prove -lr t
