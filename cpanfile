@@ -29,6 +29,7 @@ on 'test' => sub {
 };
 
 on 'develop' => sub {
+    requires 'Capture::Tiny' => '0.48';
     requires 'Test::CheckManifest' => '1.29';
     requires 'Test::CleanNamespaces';
     requires "Test::CPAN::Changes" => "0.19";
