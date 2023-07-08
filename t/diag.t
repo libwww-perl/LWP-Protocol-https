@@ -8,9 +8,9 @@ use IO::Socket::INET       ();
 use IO::Socket::SSL        ();
 use IO::Socket::SSL::Utils ();
 use Socket                 ();
-use Test::More import => [qw( diag done_testing ok subtest )]
-    ;    # import => [qw( diag done_testing ok subtest )];
+use Test::More import => [qw( diag done_testing pass subtest )];
 use Test::Needs;
+use Try::Tiny qw( try );
 
 subtest 'openssl' => sub {
     test_needs 'Capture::Tiny';
@@ -23,7 +23,24 @@ subtest 'openssl' => sub {
 
     diag "stdout: $stdout" if $stdout;
     diag "stderr: $stderr" if $stderr;
-    ok( 1, 'openssl version' );
+    pass('openssl version');
+};
+
+subtest 'net_ssleay' => sub {
+    test_needs 'Net::SSLeay';
+    try {
+        diag(
+            sprintf 'Net::SSLeay::OPENSSL_VERSION_NUMBER() 0x%08x',
+            Net::SSLeay::OPENSSL_VERSION_NUMBER()
+        );
+    };
+    try {
+        diag(
+            sprintf 'Net::SSLeay::LIBRESSL_VERSION_NUMBER() 0x%08x',
+            Net::SSLeay::LIBRESSL_VERSION_NUMBER()
+        );
+    };
+    pass('Net::SSLeay');
 };
 
 subtest 'modules' => sub {
@@ -32,7 +49,7 @@ subtest 'modules' => sub {
     diag "IO::Socket::SSL $IO::Socket::SSL::VERSION";
     diag "IO::Socket::SSL::Utils $IO::Socket::SSL::Utils::VERSION";
     diag "Socket $Socket::VERSION";
-    ok(1, 'modules');
+    pass('modules');
 };
 
 done_testing();
