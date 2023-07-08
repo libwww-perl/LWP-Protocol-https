@@ -3,6 +3,13 @@ Release history for LWP-Protocol-https
 {{$NEXT}}
     - Remove Authority section from dist.ini (GH#64) (Olaf Alders)
     - Add very basic diagnostic information via test (GH#73) (Olaf Alders)
+    - CVE-2014-3230 - don't disable verification if only hostnames should not
+      (GH#14) (Steffen Ullrich)
+    - Make explicit requirement of Mozilla::CA obsolete (GH#72) (Steffen
+      Ullrich and Olaf Alders)
+    - Remove _in_san and _cn_match. Empty out the _check_sock hook (GH#71)
+      (Chase Whitener)
+    - Use warnings (GH#69) (Pete Houston)
 
 6.10      2020-12-17 15:42:06Z
     - Fix #39 - prevent user env from breaking the test (GH#63) (Gianni
