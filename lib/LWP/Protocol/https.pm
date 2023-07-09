@@ -3,7 +3,7 @@ package LWP::Protocol::https;
 use strict;
 use warnings;
 
-our $VERSION = '6.11';
+our $VERSION = '6.12';
 
 use base qw(LWP::Protocol::http);
 require Net::HTTPS;
