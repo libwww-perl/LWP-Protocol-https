@@ -1,6 +1,6 @@
 Release history for LWP-Protocol-https
 
-{{$NEXT}}
+6.11      2023-07-09 15:10:30Z
     - Remove Authority section from dist.ini (GH#64) (Olaf Alders)
     - Add very basic diagnostic information via test (GH#73) (Olaf Alders)
     - CVE-2014-3230 - don't disable verification if only hostnames should not
