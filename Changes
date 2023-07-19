@@ -1,6 +1,7 @@
 Release history for LWP-Protocol-https
 
 {{$NEXT}}
+    - Enable MultiHomed for IO::Socket::SSL (GH#61) (ℕicolas ℝ.)
 
 6.11      2023-07-09 15:10:30Z
     - Remove Authority section from dist.ini (GH#64) (Olaf Alders)
