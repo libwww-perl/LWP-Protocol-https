@@ -1,6 +1,6 @@
 Release history for LWP-Protocol-https
 
-{{$NEXT}}
+6.12      2024-01-22 17:51:31Z
     - Enable MultiHomed for IO::Socket::SSL (GH#61) (ℕicolas ℝ.)
     - Making it possible to use IPv6 in https call through https proxy
       environment (in case of using CONNECT method to create a tunnel) (GH#74)
