@@ -96,9 +96,12 @@ sub _get_sock_info
 if ( $Net::HTTPS::SSL_SOCKET_CLASS->can('start_SSL')) {
     *_upgrade_sock = sub {
 	my ($self,$sock,$url) = @_;
+    # SNI should be passed there only if it is not an IP address.
+    # Details: https://github.com/libwww-perl/libwww-perl/issues/449#issuecomment-1896175509
+	my $host = $url->host_port() =~ m/:|^[\d.]+$/s ? () : $url->host();
 	$sock = LWP::Protocol::https::Socket->start_SSL( $sock,
 	    SSL_verifycn_name => $url->host,
-	    SSL_hostname => $url->host,
+	    SSL_hostname => $host,
 	    $self->_extra_sock_opts,
 	);
 	$@ = LWP::Protocol::https::Socket->errstr if ! $sock;
