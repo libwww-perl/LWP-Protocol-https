@@ -98,7 +98,7 @@ if ( $Net::HTTPS::SSL_SOCKET_CLASS->can('start_SSL')) {
 	my ($self,$sock,$url) = @_;
     # SNI should be passed there only if it is not an IP address.
     # Details: https://github.com/libwww-perl/libwww-perl/issues/449#issuecomment-1896175509
-	my $host = $url->host_port() =~ m/:|^[\d.]+$/s ? undef : $url->host();
+	my $host = $url->host() =~ m/:|^[\d.]+$/s ? undef : $url->host();
 	$sock = LWP::Protocol::https::Socket->start_SSL( $sock,
 	    SSL_verifycn_name => $url->host,
 	    SSL_hostname => $host,
