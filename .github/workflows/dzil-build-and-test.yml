@@ -24,7 +24,7 @@ jobs:
           EXTENDED_TESTING: 1
           RELEASE_TESTING: 1
         run: upgrade-perl-helpers && auto-build-and-test-dist
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v4
         with:
           name: build_dir
           path: build_dir
