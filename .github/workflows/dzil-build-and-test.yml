@@ -15,7 +15,7 @@ jobs:
     name: Build distribution
     runs-on: ubuntu-latest
     container:
-      image: perldocker/perl-tester:5.36
+      image: perldocker/perl-tester:5.38
     steps:
       - uses: actions/checkout@v4
       - name: Run Tests
@@ -33,7 +33,7 @@ jobs:
     needs: build-job
     runs-on: ubuntu-latest
     container:
-      image: perldocker/perl-tester:5.36
+      image: perldocker/perl-tester:5.38
     steps:
       - uses: actions/checkout@v4 # codecov wants to be inside a Git repository
       - uses: actions/download-artifact@v4
@@ -66,6 +66,7 @@ jobs:
           - "5.32"
           - "5.34"
           - "5.36"
+          - "5.38"
         exclude:
           - os: windows-latest
             perl-version: "5.8"
