@@ -92,11 +92,11 @@
    "provides" : {
       "LWP::Protocol::https" : {
          "file" : "lib/LWP/Protocol/https.pm",
-         "version" : "6.12"
+         "version" : "6.13"
       },
       "LWP::Protocol::https::Socket" : {
          "file" : "lib/LWP/Protocol/https.pm",
-         "version" : "6.12"
+         "version" : "6.13"
       }
    },
    "release_status" : "stable",
@@ -113,7 +113,7 @@
       "x_IRC" : "irc://irc.perl.org/#lwp",
       "x_MailingList" : "mailto:libwww@perl.org"
    },
-   "version" : "6.12",
+   "version" : "6.13",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.034000"
@@ -344,7 +344,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "v6.12",
+                  "tag" : "v6.13",
                   "tag_format" : "v%V",
                   "tag_message" : "v%V"
                },
@@ -534,11 +534,6 @@
             "version" : "6.031"
          },
          {
-            "class" : "Dist::Zilla::Plugin::Test::ChangesHasContent",
-            "name" : "Test::ChangesHasContent",
-            "version" : "0.011"
-         },
-         {
             "class" : "Dist::Zilla::Plugin::Test::MinimumVersion",
             "config" : {
                "Dist::Zilla::Plugin::Test::MinimumVersion" : {
@@ -698,6 +693,7 @@
       "Alex Kapranoff <ka@nadoby.ru>",
       "amire80 <amir.aharoni@gmail.com>",
       "Andreas J. Koenig <andreas.koenig@anima.de>",
+      "Axel Burri <axel@tty0.ch>",
       "Bill Mann <wfmann@alum.mit.edu>",
       "Bron Gondwana <brong@fastmail.fm>",
       "Chase Whitener <capoeirab@cpan.org>",
