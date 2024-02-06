@@ -1,5 +1,7 @@
 Release history for LWP-Protocol-https
 
+{{$NEXT}}
+
 6.13      2024-02-06 01:00:50Z
     - Fix ssl upgrade for regular host names (GH#77) (Axel Burri)
 

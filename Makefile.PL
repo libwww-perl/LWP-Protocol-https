@@ -41,7 +41,7 @@ my %WriteMakefileArgs = (
     "Test::RequiresInternet" => 0,
     "warnings" => 0
   },
-  "VERSION" => "6.13",
+  "VERSION" => "6.14",
   "test" => {
     "TESTS" => "t/*.t"
   }
