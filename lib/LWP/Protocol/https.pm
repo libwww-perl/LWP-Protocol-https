@@ -5,7 +5,7 @@ use warnings;
 
 our $VERSION = '6.14';
 
-use base qw(LWP::Protocol::http);
+use parent qw(LWP::Protocol::http);
 require Net::HTTPS;
 
 sub socket_type
@@ -112,7 +112,7 @@ if ( $Net::HTTPS::SSL_SOCKET_CLASS->can('start_SSL')) {
 #-----------------------------------------------------------
 package LWP::Protocol::https::Socket;
 
-use base qw(Net::HTTPS LWP::Protocol::http::SocketMethods);
+use parent -norequire, qw(Net::HTTPS LWP::Protocol::http::SocketMethods);
 
 1;
 
