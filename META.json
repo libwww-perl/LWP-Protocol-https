@@ -92,11 +92,11 @@
    "provides" : {
       "LWP::Protocol::https" : {
          "file" : "lib/LWP/Protocol/https.pm",
-         "version" : "6.13"
+         "version" : "6.14"
       },
       "LWP::Protocol::https::Socket" : {
          "file" : "lib/LWP/Protocol/https.pm",
-         "version" : "6.13"
+         "version" : "6.14"
       }
    },
    "release_status" : "stable",
@@ -113,7 +113,7 @@
       "x_IRC" : "irc://irc.perl.org/#lwp",
       "x_MailingList" : "mailto:libwww@perl.org"
    },
-   "version" : "6.13",
+   "version" : "6.14",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.034000"
@@ -344,7 +344,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "v6.13",
+                  "tag" : "v6.14",
                   "tag_format" : "v%V",
                   "tag_message" : "v%V"
                },
@@ -723,6 +723,7 @@
       "Jon Jensen <jon@endpoint.com>",
       "Karen Etheridge <ether@cpan.org>",
       "Leo Lapworth <leo@cuckoo.org>",
+      "Marin Tsanov <btg.tsanov.marin@gmail.com>",
       "Mark Stosberg <mark@stosberg.com>",
       "Michael G. Schwern <schwern@pobox.com>",
       "Mike Schilli <github@perlmeister.com>",
