@@ -2,7 +2,7 @@
 
 use strict;
 use Test::More;
-use Test::RequiresInternet 'www.example.com' => 443;
+use Test::RequiresInternet 'httpbin.org' => 443;
 
 use LWP::UserAgent ();
 
@@ -10,7 +10,7 @@ my $ua = LWP::UserAgent->new( ssl_opts => { verify_hostname => 0 } );
 
 plan tests => 2;
 
-my $url = 'https://www.example.com';
+my $url = 'https://httpbin.org';
 
 subtest "Request GET $url" => sub {
     plan tests => 6;
@@ -43,7 +43,7 @@ subtest "Request GET $url" => sub {
     my $ssl_cipher = $res->header($h) || '';
     ok($ssl_cipher =~ /\S/, "have header $h");
 
-    like($res->content, qr/Example Domain/, "found expected document content");
+    like($res->content, qr/\Qhttpbin.org/, "found expected document content");
 };
 
 subtest "Check for warnings from GET $url (RT #81948)" => sub {
