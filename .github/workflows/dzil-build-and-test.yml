@@ -67,6 +67,8 @@ jobs:
           - "5.34"
           - "5.36"
           - "5.38"
+          - "5.40"
+          - "5.42"
         exclude:
           - os: windows-latest
             perl-version: "5.10"
@@ -84,13 +86,21 @@ jobs:
             perl-version: "5.34"
           - os: windows-latest
             perl-version: "5.36"
+          - os: windows-latest
+            perl-version: "5.38"
     name: Perl ${{ matrix.perl-version }} on ${{ matrix.os }}
     steps:
-      - name: Set Up Perl
+      - name: Set Up Strawberry Perl
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl-version }}
-          distribution: strawberry # this option only used on Windows
+          distribution: strawberry
+        if: ${{ matrix.os == 'windows-latest' }}
+      - name: Set Up Regular Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl-version }}
+        if: ${{ matrix.os != 'windows-latest' }}
       - uses: actions/download-artifact@v5
         with:
           name: build_dir
