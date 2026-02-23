@@ -1,6 +1,6 @@
 Release history for LWP-Protocol-https
 
-{{$NEXT}}
+6.15      2026-02-23 20:36:42Z
     - Make TLS enabled proxy work (proxy URL https:// not http://) (GH#89)
       (Steffen Ullrich)
     - switch from example.com to httpbin.org because of SSL certificate issues
