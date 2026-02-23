@@ -1,6 +1,10 @@
 Release history for LWP-Protocol-https
 
 {{$NEXT}}
+    - Make TLS enabled proxy work (proxy URL https:// not http://) (GH#89)
+      (Steffen Ullrich)
+    - switch from example.com to httpbin.org because of SSL certificate issues
+      (GH#91) (Slaven Rezić)
 
 6.14      2024-03-11 01:08:33Z
     - Inherit with 'use parent' instead of 'use base' (GH#78) (Marin Tsanov)
