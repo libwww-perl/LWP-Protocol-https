@@ -24,12 +24,12 @@ on 'test' => sub {
     requires "Socket" => "0";
     requires "Test::More" => "0.96";
     requires "Test::Needs" => "0.002010";
-    requires "Test::RequiresInternet" => "0";
     requires "warnings" => "0";
 };
 
 on 'develop' => sub {
     requires 'Capture::Tiny' => '0.48';
+    requires "Test::RequiresInternet" => "0";
     requires 'Test::CheckManifest' => '1.29';
     requires 'Test::CleanNamespaces';
     requires "Test::CPAN::Changes" => "0.19";
