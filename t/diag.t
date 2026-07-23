@@ -10,7 +10,6 @@ use IO::Socket::SSL::Utils ();
 use Socket                 ();
 use Test::More import => [qw( diag done_testing pass subtest )];
 use Test::Needs;
-use Try::Tiny qw( try );
 
 subtest 'openssl' => sub {
     test_needs 'Capture::Tiny';
@@ -28,18 +27,20 @@ subtest 'openssl' => sub {
 
 subtest 'net_ssleay' => sub {
     test_needs 'Net::SSLeay';
-    try {
+    eval {
         diag(
             sprintf 'Net::SSLeay::OPENSSL_VERSION_NUMBER() 0x%08x',
             Net::SSLeay::OPENSSL_VERSION_NUMBER()
         );
-    };
-    try {
+        1;
+    } or diag("Net::SSLeay::OPENSSL_VERSION_NUMBER() unavailable: $@");
+    eval {
         diag(
             sprintf 'Net::SSLeay::LIBRESSL_VERSION_NUMBER() 0x%08x',
             Net::SSLeay::LIBRESSL_VERSION_NUMBER()
         );
-    };
+        1;
+    } or diag("Net::SSLeay::LIBRESSL_VERSION_NUMBER() unavailable: $@");
     pass('Net::SSLeay');
 };
 
