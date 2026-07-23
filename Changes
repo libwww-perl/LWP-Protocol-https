@@ -1,5 +1,7 @@
 Release history for LWP-Protocol-https
 
+{{$NEXT}}
+
 6.17      2026-07-23 14:32:07Z
     - Move the live httpbin.org test from t/example.t to xt/author/example.t so
       that a transient outage of the external service (e.g. a 503) can no longer
