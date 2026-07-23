@@ -1,6 +1,8 @@
 Release history for LWP-Protocol-https
 
 {{$NEXT}}
+    - Remove undeclared Try::Tiny dependency from t/diag.t, which could cause
+      the test suite to fail to install on minimal perls (GH#96) (Olaf Alders)
 
 6.15      2026-02-23 20:36:42Z
     - Make TLS enabled proxy work (proxy URL https:// not http://) (GH#89)
