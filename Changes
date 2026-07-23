@@ -5,7 +5,7 @@ Release history for LWP-Protocol-https
       that a transient outage of the external service (e.g. a 503) can no longer
       fail an end-user install. The test still runs in CI, and now skips
       (rather than fails) when httpbin.org itself is unhealthy, e.g. returns a
-      5xx. (Claude Opus 4.8)
+      5xx. (GH#100) (Claude Opus 4.8)
 
 6.16      2026-07-23 03:48:07Z
     - Remove undeclared Try::Tiny dependency from t/diag.t, which could cause
