@@ -8,9 +8,19 @@ use LWP::UserAgent ();
 
 my $ua = LWP::UserAgent->new( ssl_opts => { verify_hostname => 0 } );
 
-plan tests => 2;
-
 my $url = 'https://httpbin.org';
+
+# httpbin.org is a shared public service that intermittently returns 5xx or
+# times out. Test::RequiresInternet only proves the TCP port is reachable, so
+# an up-but-unhealthy service would otherwise fail this test even though there
+# is nothing wrong with the module. Probe once and skip if it is unhealthy.
+{
+    my $probe = $ua->simple_request( HTTP::Request->new( GET => $url ) );
+    plan skip_all => "$url unavailable: " . $probe->status_line
+        unless $probe->is_success;
+}
+
+plan tests => 2;
 
 subtest "Request GET $url" => sub {
     plan tests => 6;
