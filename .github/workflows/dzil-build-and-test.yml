@@ -48,6 +48,23 @@ jobs:
         run: cpan-install-dist-deps && test-dist
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+  # Perl development version (blead). Informational only: a red X here means the
+  # dist broke on the upcoming Perl (see GH#96, where it failed to install on
+  # blead 5.45.1). Keep this OUT of the required status checks so it never
+  # blocks a merge -- we want the signal, not a gate.
+  blead-job:
+    name: Perl blead (devel, non-blocking)
+    needs: build-job
+    runs-on: ubuntu-latest
+    container:
+      image: perldocker/perl-tester:devel
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: build_dir
+          path: .
+      - name: Install deps and test on blead
+        run: cpan-install-dist-deps && test-dist
   test-job:
     needs: build-job
     runs-on: ${{ matrix.os }}
