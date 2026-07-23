@@ -55,6 +55,7 @@
             "Test::Pod::Coverage" : "1.08",
             "Test::Pod::Spelling::CommonMistakes" : "1.000",
             "Test::Portability::Files" : "0",
+            "Test::RequiresInternet" : "0",
             "Test::Spelling" : "0.17",
             "Test::Version" : "1"
          }
@@ -86,7 +87,6 @@
             "Socket" : "0",
             "Test::More" : "0.96",
             "Test::Needs" : "0.002010",
-            "Test::RequiresInternet" : "0",
             "perl" : "5.008001",
             "warnings" : "0"
          }
@@ -95,7 +95,7 @@
    "provides" : {
       "LWP::Protocol::https" : {
          "file" : "lib/LWP/Protocol/https.pm",
-         "version" : "6.16"
+         "version" : "6.17"
       }
    },
    "release_status" : "stable",
@@ -112,7 +112,7 @@
       "x_IRC" : "irc://irc.perl.org/#lwp",
       "x_MailingList" : "mailto:libwww@perl.org"
    },
-   "version" : "6.16",
+   "version" : "6.17",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.042002"
@@ -343,7 +343,7 @@
                   "branch" : null,
                   "changelog" : "Changes",
                   "signed" : 0,
-                  "tag" : "v6.16",
+                  "tag" : "v6.17",
                   "tag_format" : "v%V",
                   "tag_message" : "v%V"
                },

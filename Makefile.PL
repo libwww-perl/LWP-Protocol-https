@@ -38,7 +38,6 @@ my %WriteMakefileArgs = (
     "Socket" => 0,
     "Test::More" => "0.96",
     "Test::Needs" => "0.002010",
-    "Test::RequiresInternet" => 0,
     "warnings" => 0
   },
   "VERSION" => "6.17",
@@ -61,7 +60,6 @@ my %FallbackPrereqs = (
   "Socket" => 0,
   "Test::More" => "0.96",
   "Test::Needs" => "0.002010",
-  "Test::RequiresInternet" => 0,
   "base" => 0,
   "strict" => 0,
   "warnings" => 0
